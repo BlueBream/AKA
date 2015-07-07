@@ -98,7 +98,21 @@ class P_spm extends CI_Controller {
 //================================== START Kuesioner Pegawai ===================================
 		public function Pegawai(){
 			$data['content']='pg_spm/Pegawai';
+			$data['data'] = $this->m_spm->Kuesioner_Pegawai();
+			$data['pagination'] = $this->pagination->create_links();
 			$this->load->view('pg_spm/content',$data);
 		}
-//================================== END Kuesioner Pegawai ===================================
+
+		//proses input data kuesioner
+		public function prosesinput_Kuesioner_Pegawai(){
+			$this->m_spm->prosesinput_Kuesioner_Pegawai();
+			redirect('p_spm/Pegawai');
+		}
+
+		public function Hapus_Judul_Kuesioner_Pegawai(){
+			$this->m_spm->hapus_judul_Kuesioner_Pegawai();
+			redirect('p_spm/Pegawai');
+		}
+//================================== END Kuesioner ===================================
+
 }
