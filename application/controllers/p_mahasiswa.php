@@ -1,0 +1,327 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+	class P_mahasiswa extends CI_Controller {
+		function __Construct()
+		{
+			parent::__construct();
+			$this->cek_login = $this->session->userdata('login') == true;
+			$this->load->model('m_mahasiswa');
+			$this->load->model('m_aka');
+			$this->m_aka->update_waktu_nilai();
+			$this->id = $this->session->userdata('id_mhs');
+			$this->nim = $this->session->userdata('nim_s');
+			if(!$this->nim = $this->session->userdata('nim_s')){
+				redirect('c_index_aka/pilih_menu');
+			}
+		}
+		public function index(){
+			if($this->cek_login){
+
+				$data['content']="pg_mahasiswa/utama";
+				$this->load->view('pg_mahasiswa/content',$data);
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}			}
+		public function logout(){
+			$this->session->sess_destroy();
+			redirect("c_index_aka/pilih_menu");
+		}
+
+		public function pengumuman_akademik()
+		{
+			if($this->cek_login){
+				$data['data'] = $this->m_mahasiswa->pengumuman_akademik(); 
+				$data['pagination'] = $this->pagination->create_links();
+				$data['content'] = 'pg_mahasiswa/pengumuman_akademik';
+				$this->load->view('pg_mahasiswa/content', $data);
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+
+	/*===================================== START BIMBINGAN ==================== */
+		public function buat_pesan(){
+			if($this->cek_login){
+				$id = $this->id;
+				$get_id_bimbingan = $this->db->query("SELECT * FROM t_bimbingan WHERE id_mahasiswa='$id'");
+				$get_id = $get_id_bimbingan->num_rows();
+				$bimbim = $get_id_bimbingan->row();
+				if($get_id > 0){				
+				$data['content'] = 'pg_mahasiswa/buat_pesan';
+				$this->load->view('pg_mahasiswa/content', $data);
+				}else{
+					$this->session->Set_userdata('msg_error',"Belum mempunyai bimbingan, Silahkan konfirmasi");
+					redirect('p_mahasiswa');					
+				}
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+		public function kirim_pesan(){
+			if($this->cek_login){
+				$id=$this->id;			
+				$sql = $this->m_mahasiswa->kirim_pesan($id);
+				if($sql){
+					$this->session->set_userdata('msg','Success');
+					redirect('p_mahasiswa/daftar_percakapan');
+				}else{
+					$this->session->set_userdata('msg_error','Failed..');
+					redirect('p_mahasiswa/buat_pesan');
+				}
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+		public function daftar_percakapan(){
+			if($this->cek_login){
+				$id=$this->id;
+				$data['data']=$this->m_mahasiswa->daftar_percakapan($id);
+				$data['content'] = 'pg_mahasiswa/daftar_percakapan';
+				$this->load->view('pg_mahasiswa/content', $data);
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}	
+		}
+		public function pesan(){
+			if($this->cek_login){
+				$id=$this->id;
+				$id_konsultasi = $this->uri->segment(3);
+				$data['data']=$this->m_mahasiswa->pesan($id,$id_konsultasi);
+				$data['from']=$this->m_mahasiswa->done_by($id,$id_konsultasi);
+				$data['content'] = 'pg_mahasiswa/pesan';
+				$this->load->view('pg_mahasiswa/content', $data);
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}			
+		}		
+
+	/*===================================== END BIMBINGAN ==================== */
+/* -------------------------------------------- END BAHAN KULIAH ------------------------------------------------- */
+	public function jadwal_kuliah(){
+		if($this->cek_login){
+			$id = $this->id;
+			$data['data'] = $this->m_mahasiswa->data_jadwal_kuliah($id); 
+			$data['content'] = 'pg_mahasiswa/data_jadwal_kuliah';
+			$this->load->view('pg_mahasiswa/content', $data);			
+			
+		}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+	}
+
+/* -------------------------------------------- START JADWAL KULIAH ------------------------------------------------- */
+/* -------------------------------------------- START FRS ------------------------------------------------- */
+		public function frs_list(){
+			if($this->cek_login){
+					$get_tanggal = $this->db->query("SELECT * FROM t_waktu_frs WHERE nama='Pengisian FRS' AND status='aktif'")->row();
+
+					$tgl_buka = $get_tanggal->tanggal_buka;
+					$tgl_tutup = $get_tanggal->tanggal_tutup;
+					$ex_tgl_buka = explode("-", $tgl_buka);
+					
+					$setup_date = $this->db->query("SELECT * FROM t_waktu_frs WHERE CURDATE() BETWEEN '$tgl_buka' AND '$tgl_tutup' AND nama='Pengisian FRS' AND status='aktif'");
+					$tgl_now = date("Y-m-d");
+
+					$selisih_buku = (strtotime($tgl_now)-strtotime($tgl_buka))/(60*60*24);					
+					$selisih = (strtotime($tgl_tutup)-strtotime($tgl_now))/(60*60*24);
+					if($setup_date->num_rows() > 0){
+								$id=$this->id;
+								$nim=$this->nim;
+								$get_smt = $this->db->query("SELECT *,MAX(smt) as semester FROM t_dump WHERE nim='$nim'")->row();
+								$semester = $get_smt->semester;
+							if($semester > 2){							
+								$sql = $this->db->query("SELECT * FROM t_mahasiswa WHERE nim ='$nim'")->row();
+								$nim_pendaftaran = $sql->pendaftaran;
+								if($nim_pendaftaran == "buka"){
+									$data['query'] = $this->m_mahasiswa->frs_list($nim); 
+									$data['content'] = 'pg_mahasiswa/list_frs';
+									$this->load->view('pg_mahasiswa/content', $data);				
+								}else{
+									$this->session->set_userdata('msg_error',"Maaf NIM $nim belum daftar ulang");
+									redirect("p_mahasiswa/frs_sudah");
+								}
+							}else{
+									$this->session->set_userdata('msg_error',"FRS otomatis dikerjakan oleh admin");
+									redirect("p_mahasiswa/frs_sudah");							
+							}
+					}else{
+						$this->session->set_userdata('msg_error',"Pengisian Rencana Studi Di tutup");
+								redirect("p_mahasiswa/frs_sudah");
+					}
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}			
+		}
+		public function frs(){
+			if($this->cek_login){
+					$id=$this->id;
+					$nim=$this->nim;
+
+					$get_tanggal = $this->db->query("SELECT * FROM t_waktu_frs WHERE nama='Pengisian FRS' AND status='aktif'")->row();
+					$tgl_buka = $get_tanggal->tanggal_buka;
+					$tgl_tutup = $get_tanggal->tanggal_tutup;
+					$tgl_now = date("Y-m-d");						
+					$selisih = (strtotime($tgl_tutup)-strtotime($tgl_now))/(60*60*24);
+					$setup_date = $this->db->query("SELECT * FROM t_waktu_frs WHERE CURDATE() BETWEEN '$tgl_buka' AND '$tgl_tutup' AND nama='Pengisian FRS' AND status='aktif'");
+					if($setup_date->num_rows() > 0){
+						$get_smt = $this->db->query("SELECT *,MAX(smt) as semester FROM t_dump WHERE nim='$nim'")->row();
+						$semester = $get_smt->semester;
+					if($semester > 2){				
+
+						$sql = $this->db->query("SELECT * FROM t_mahasiswa WHERE nim ='$nim'")->row();
+						$nim_pendaftaran = $sql->pendaftaran;
+						if($nim_pendaftaran == "buka"){
+							$data['data_frs'] = $this->m_aka->frs($nim);
+							$data['data_mhs'] = $this->m_aka->frs_data_id($nim);
+							$data['content']='pg_mahasiswa/ch_frs';
+							$this->load->view('pg_mahasiswa/content',$data);
+						}else{
+							$this->session->set_userdata('msg_error',"Maaf NIM $nim belum daftar ulang");
+							redirect("p_mahasiswa/frs_sudah");
+						}
+					}else{
+					$this->session->set_userdata('msg_error',"FRS otomatis dikerjakan oleh admin");
+					redirect("p_mahasiswa/frs_sudah");	
+					}
+				}else{
+						$this->session->set_userdata('msg_error',"Waktu pengisian FRS habis");
+						redirect("p_mahasiswa/frs_sudah");					
+				}				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+		function frs_sudah(){
+			if($this->cek_login){
+					$data['content']='pg_mahasiswa/frs_sudah';
+					$this->load->view('pg_mahasiswa/content',$data);				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}			
+		}
+
+	public function input_ulang_mk(){
+		if($this->cek_login){
+				$add_ulang = $this->input->post("add_ulang_mk");
+				$nim = $this->session->userdata("nim_s");
+				$mk = "t_mk";
+				$data['mk'] = $this->m_aka->get_all($mk);
+				if($add_ulang){
+					$this->m_mahasiswa->input_mk_ulang_m();
+				}
+				$data['content']='pg_mahasiswa/ulang_mk';
+				$this->load->view('pg_mahasiswa/content',$data);
+
+				$get_smt = $this->db->query("SELECT *,MAX(smt) as semester FROM t_dump WHERE nim='$nim'")->row_array();
+				if($get_smt['semester'] < 3){	
+					$this->session->set_userdata('msg_error',"Mahasiswa semester 1 dan 2 input mata kuliah dilakukan oleh admin");
+					redirect("p_mahasiswa/redirect_ulang_mk");	
+				}				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+	}
+
+	public function redirect_ulang_mk(){
+		if($this->cek_login){
+					$data['content']='pg_mahasiswa/redirect_ulang';
+					$this->load->view('pg_mahasiswa/content',$data);				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+	}
+
+	public function simpan_frs(){
+		if($this->cek_login){
+			$nim=$this->nim;
+			$jumlah_sks = $this->input->post('jumlah_sks');
+			$id_mhs = $this->input->post('id_mhs');
+			$smt = $this->input->post('semester');
+			$dataSession = array(
+				'id_detail_kuota'=> $this->input->post('id_detail_kuota'),
+				'jumlah_sks' => $jumlah_sks,
+				'nim'=>$nim,
+				'kode_mk'=>$this->input->post('kode_mk'),			
+				'id_mhs'=>$id_mhs,
+				'id_mk'=>$this->input->post('id_mk'),
+				'semester'=>$smt
+				);
+				$this->session->set_userdata($dataSession);
+				$this->m_mahasiswa->simpan_frs($dataSession,$nim);
+		}else{
+			redirect("c_index_aka/pilih_menu");
+		}
+	}		
+/* -------------------------------------------- END FRS ------------------------------------------------- */
+/* -------------------------------------------- START DAFTAR ULANG ------------------------------------------------- */
+		public function daftar_ulang(){
+			if($this->cek_login){
+					$data['content']='pg_mahasiswa/daftar_ulang';
+					$this->load->view('pg_mahasiswa/content',$data);				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+/* -------------------------------------------- END DAFTAR ULANG ------------------------------------------------- */
+/* -------------------------------------------- START DAFTAR ULANG ------------------------------------------------- */
+		public function nilai_semester_detail(){
+			if($this->cek_login){
+					$nim=$this->nim;
+					$smt = $this->uri->segment(3);
+					$data['data'] = $this->m_mahasiswa->tampil_semester($nim,$smt);
+					$data['smt']=$smt;
+					$data['nim']=$nim;
+					$data['content']='pg_mahasiswa/nilai_semester';
+					$this->load->view('pg_mahasiswa/content',$data);				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+/* -------------------------------------------- END DAFTAR ULANG ------------------------------------------------- */
+/* -------------------------------------------- START IPK SEMESTER ------------------------------------------------- */
+		public function nilai_IPK_detail(){
+			if($this->cek_login){
+					$nim=$this->nim;
+					$smt = $this->uri->segment(3);
+					$data['smt']=$smt;
+					$data['nim']=$nim;					
+					$data['data'] = $this->m_mahasiswa->nilai_IPK_semester($nim,$smt);
+					$data['content']='pg_mahasiswa/nilai_IPK_semester';
+					$this->load->view('pg_mahasiswa/content',$data);				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+/* -------------------------------------------- END IPK SEMESTER ------------------------------------------------- */
+/* -------------------------------------------- START IPK AKHIR ------------------------------------------------- */
+		public function nilai_IPK_akhir(){
+			if($this->cek_login){
+					$nim=$this->nim;
+					$smt = $this->uri->segment(3);
+					$data['nim']=$nim;
+					$data['data'] = $this->m_mahasiswa->nilai_IPK_akhir($nim);
+					$data['content']='pg_mahasiswa/nilai_IPK_akhir';
+					$this->load->view('pg_mahasiswa/content',$data);				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+/* -------------------------------------------- END IPK AKHIR ------------------------------------------------- */
+
+/* --------------------------------------------- START KUISIONER ----------------------------------------------- */
+	public function tampil_kuesioner(){
+			if($this->cek_login){
+					$nim=$this->nim;
+					$smt = $this->uri->segment(3);
+					$data['data'] = $this->m_mahasiswa->tampil_semester($nim,$smt);
+					$data['smt']=$smt;
+					$data['nim']=$nim;
+					$data['content']='pg_mahasiswa/Kuesioner';
+					$this->load->view('pg_mahasiswa/content',$data);				
+			}else{
+				redirect("c_index_aka/pilih_menu");
+			}
+		}
+
+/* --------------------------------------------- END KUISIONER ----------------------------------------------- */		
+	}

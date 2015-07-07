@@ -1,0 +1,17 @@
+ul ,ul li, ul ul li, ul ul ul li{
+	text-transform:capitalize;
+}
+
+.ace-settings-container,.savenilai,.cancelnilai{
+	display:none;
+}
+.hurufform{
+	display: none;
+}
+.semesterlist{
+	float:left;
+	display: inline-block;
+}
+.semesterlistlast{
+	margin-bottom: 10px;
+}

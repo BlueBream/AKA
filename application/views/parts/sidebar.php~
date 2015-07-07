@@ -1,0 +1,595 @@
+		<div class="main-container container-fluid">
+			<a class="menu-toggler" id="menu-toggler" href="#">
+				<span class="menu-text"></span>
+			</a>
+
+			<div class="sidebar" id="sidebar">
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-small btn-success">
+							<i class="icon-signal"></i>
+						</button>
+
+						<button class="btn btn-small btn-info">
+							<i class="icon-pencil"></i>
+						</button>
+
+						<button class="btn btn-small btn-warning">
+							<i class="icon-group"></i>
+						</button>
+
+						<button class="btn btn-small btn-danger">
+							<i class="icon-cogs"></i>
+						</button>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+					</div>
+				</div><!--#sidebar-shortcuts-->
+
+				<ul class="nav nav-list">
+					<li>
+						<a href="utama.html">
+							<i class="icon-home"></i>
+							<span class="menu-text"> Utama </span>
+						</a>
+					</li>
+
+					<li>
+						<a href="Keuangan.html" class="dropdown-toggle">
+							<i class="icon-table"></i>
+							<span class="menu-text"> Keuangan </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+							<li>
+								<a href="registrasi_pembayaran.html">
+									<i class="icon-double-angle-right"></i>
+									Registrasi pembayaran
+								</a>
+							</li>
+							<li>
+								<a href="data_pembayaran_spp.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Data pembayaran SPP
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="berdasarkan_perorangan.html">
+											<i class="icon-table"></i>
+											Berdasarkan perorangan
+										</a>
+									</li>
+									<li>
+										<a href="berdasarkan_tanggal.html">
+											<i class="icon-table"></i>
+											Berdasarkan Tanggal
+										</a>
+									</li>
+									<li>
+										<a href="berdasarkan_semester.html">
+											<i class="icon-table"></i>
+											Berdasarkan Semester
+										</a>
+									</li>
+								</ul>
+							</li>
+
+							<li>
+								<a href="set_up_biaya.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Set up biaya
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="edit_biaya_kuliah.html">
+											<i class="icon-table"></i>
+											edit biaya kuliah
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+						</ul>
+					</li>
+
+					<li>
+						<a href="jurusan.html" class="dropdown-toggle">
+							<i class="icon-table"></i>
+							<span class="menu-text"> Jurusan </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+							<li>
+								<a href="dosen.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Dosen
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="data_dosen.html">
+											<i class="icon-table"></i>
+											Data dosen
+										</a>
+									</li>
+									<li>
+										<a href="bimbingan.html">
+											<i class="icon-table"></i>
+											Bimbingan
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+							<li>
+								<a href="mata_kuliah.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Mata kuliah
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="data_mata_kuliah.html">
+											<i class="icon-table"></i>
+											Data mata kuliah
+										</a>
+									</li>
+									<li>
+										<a href="kuota_mata_kuliah_pilihan">
+											<i class="icon-table"></i>
+											Kuota mata kuliah pilihan
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+							<li>
+								<a href="jadwal.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Jadwal
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="data_jadwal.html">
+											<i class="icon-table"></i>
+											Data jadwal
+										</a>
+									</li>
+									<li>
+										<a href="kalender_.html">
+											<i class="icon-table"></i>
+											kalender akademik
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+						</ul>
+					</li>
+
+					<li>
+						<a href="akademik.html" class="dropdown-toggle">
+							<i class="icon-table"></i>
+							<span class="menu-text"> Akademik </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+							<li>
+								<a href="mata_kuliah.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Mata kuliah
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="<?php echo base_url(); ?>c_index_aka/data_mata_kuliah">
+											<i class="icon-table"></i>
+											Data mata kuliah
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url(); ?>c_index_aka/data_jadwal_kuliah">
+											<i class="icon-table"></i>
+											Jadwal kuliah
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url(); ?>c_index_aka/data_tahun_ajaran">
+											<i class="icon-table"></i>
+											Tahun ajaran
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+							<li>
+								<a href="mahasiswa.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Mahasiswa
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="<?php echo base_url(); ?>c_index_aka/data_mahasiswa">
+											<i class="icon-table"></i>
+											Data mahasiswa
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url(); ?>c_index_aka/data_nilai">
+											<i class="icon-table"></i>
+											Input nilai
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo base_url(); ?>c_index_aka/pengisian_frs">
+											<i class="icon-table"></i>
+											Pengisian FRS
+										</a>
+									</li>
+									<li>
+										<a href="manipulasi_frs.html">
+											<i class="icon-table"></i>
+											Manipulasi FRS
+										</a>
+									</li>
+									<li>
+										<a href="waktu_daftar_ulang.html">
+											<i class="icon-table"></i>
+											Waktu daftar ulang
+										</a>
+									</li>
+									<li>
+										<a href="permohonan_cuti_akademik.html">
+											<i class="icon-table"></i>
+											Permohonan cuti akademik
+										</a>
+									</li>
+									<li>
+										<a href="posting_pengumuman.html" class="dropdown-toggle">
+											<i class="icon-double-angle-right"></i>
+
+											Posting pengumuman
+											<b class="arrow icon-angle-down"></b>
+										</a>
+
+										<ul class="submenu">
+											<li>
+												<a href="<?php echo base_url();?>c_index_aka/data_bahan_kuliah">
+													<i class="icon-table"></i>
+													Bahan kuliah
+												</a>
+											</li>
+											<li>
+												<a href="<?php echo base_url();?>c_index_aka/data_pengumuman_akademik">
+													<i class="icon-table"></i>
+													Pengumuman akademik
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+
+							
+
+						</ul>
+					</li>
+
+					<li>
+						<a href="dosen_home.html" class="dropdown-toggle">
+							<i class="icon-table"></i>
+							<span class="menu-text"> Dosen </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+							<li>
+								<a href="#" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Administrasi Data Dosen
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="bidata_dosen.html">
+											<i class="icon-table"></i>
+											Biodata
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+							<li>
+								<a href="administrasi_dosen_perkuliahan.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Administrasi Dosen Perkuliahan
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="nilai.html">
+											<i class="icon-table"></i>
+											Nilai
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+							
+
+						</ul>
+					</li>
+
+					<li>
+						<a href="report.html" class="dropdown-toggle">
+							<i class="icon-table"></i>
+							<span class="menu-text"> Report </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+							<li>
+								<a href="rep_jurusan.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Jurusan
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="rep_data_dosen.html">
+											<i class="icon-table"></i>
+											Data dosen
+										</a>
+									</li>
+									<li>
+										<a href="rep_data_mata_kuliah.html">
+											<i class="icon-table"></i>
+											Data mata kuliah
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+							<li>
+								<a href="rep_akademik.html" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Akademik
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="rep_kohort_data_mahasiswa.html">
+											<i class="icon-table"></i>
+											Kohort Data Mahasiswa
+										</a>
+									</li>
+									<li>
+										<a href="rep_daftar_hadir_ujian.html">
+											<i class="icon-table"></i>
+											Daftar hadir ujian
+										</a>
+									</li>
+									<li>
+										<a href="rep_daftar_hadir_16_minggu.html">
+											<i class="icon-table"></i>
+											Daftar hadir 16 minggu
+										</a>
+									</li>
+									<li>
+										<a href="rep_nilai_permata_kuliah.html">
+											<i class="icon-table"></i>
+											nilai permata kuliah
+										</a>
+									</li>
+									<li>
+										<a href="rep_indeks_prestasi.html">
+											<i class="icon-table"></i>
+											indeks prestasi
+										</a>
+									</li>
+									<li>
+										<a href="rep_daerah_asal_mahasiswa.html">
+											<i class="icon-table"></i>
+											Daerah asal mahasiswa
+										</a>
+									</li>
+									<li>
+										<a href="rep_data_cuti_akademik_mahasiswa.html">
+											<i class="icon-table"></i>
+											Data cuti akademik mahasiswa
+										</a>
+									</li>
+									<li>
+										<a href="rep_edit_nama_ka_baak.html">
+											<i class="icon-table"></i>
+											edit Nama KA. BAAK
+										</a>
+									</li>
+
+									<li>
+										<a href="rep_transkrip.html" class="dropdown-toggle">
+											<i class="icon-double-angle-right"></i>
+
+											Transkrip
+											<b class="arrow icon-angle-down"></b>
+										</a>
+
+										<ul class="submenu">
+											<li>
+												<a href="rep_transkrip_lengkap.html">
+													<i class="icon-table"></i>
+													Transkrip lengkap
+												</a>
+											</li>
+											<li>
+												<a href="rep_transkrip_sementara.html">
+													<i class="icon-table"></i>
+													Transkrip sementara
+												</a>
+											</li>
+											<li>
+												<a href="rep_transkrip_tanpa_kop_surat.html">
+													<i class="icon-table"></i>
+													Transkrip tanpa kop surat
+												</a>
+											</li>
+											<li>
+												<a href="rep_khs_umum.html">
+													<i class="icon-table"></i>
+													KHS umum
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									
+								</ul>
+							</li>
+
+
+						</ul>
+					</li>
+
+					<li>
+						<a href="#" class="dropdown-toggle">
+							<i class="icon-table"></i>
+							<span class="menu-text"> Admin </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+							<li>
+								<a href="#" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Password
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											Password akademik
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											password mahasiswa
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											password keuangan
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											password jurusan
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											password dosen
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+							<li>
+								<a href="#" class="dropdown-toggle">
+									<i class="icon-double-angle-right"></i>
+
+									Data staff
+									<b class="arrow icon-angle-down"></b>
+								</a>
+
+								<ul class="submenu">
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											staff akademik
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											staff keuangan
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="icon-table"></i>
+											staff jurusan
+										</a>
+									</li>
+									
+								</ul>
+							</li>
+
+						
+
+						</ul>
+					</li>
+
+				</ul><!--/.nav-list-->
+
+				<div class="sidebar-collapse" id="sidebar-collapse">
+					<i class="icon-double-angle-left"></i>
+				</div>
+			</div>
