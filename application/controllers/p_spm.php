@@ -74,20 +74,31 @@ class P_spm extends CI_Controller {
 	}
 //================================== END Kuesioner ===================================
 
-//================================== START Kuesioner ===================================
+//================================== START Kuesioner Mata Kuliah ===================================
 		public function Mata_Kuliah(){
 			$data['content']='pg_spm/Mata_Kuliah';
+			$data['data'] = $this->m_spm->Kuesioner_MK();
+			$data['pagination'] = $this->pagination->create_links();
 			$this->load->view('pg_spm/content',$data);
+		}
+
+		//proses input data kuesioner
+		public function prosesinput_Kuesioner_MK(){
+			$this->m_spm->prosesinput_Kuesioner_MK();
+			redirect('p_spm/Mata_Kuliah');
+		}
+
+		public function Hapus_Judul_Kuesioner_MK(){
+		$this->m_spm->hapus_judul_Kuesioner_MK();
+		redirect('p_spm/Mata_Kuliah');
 		}
 
 //================================== END Kuesioner ===================================
 
-//================================== START Kuesioner ===================================
+//================================== START Kuesioner Pegawai ===================================
 		public function Pegawai(){
 			$data['content']='pg_spm/Pegawai';
 			$this->load->view('pg_spm/content',$data);
 		}
-
-//================================== END Kuesioner ===================================
-
+//================================== END Kuesioner Pegawai ===================================
 }
