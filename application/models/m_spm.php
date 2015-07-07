@@ -71,6 +71,53 @@ class m_spm extends CI_Model{
 	
 /* -------------------------------------------- END Kuesioner Mahasiswa ------------------------------------------------- */
 
+/* -------------------------------------------- START Kuesioner MK ------------------------------------------------- */
+public function Kuesioner_MK(){
+		$offset = $this->uri->segment(3);
+		if(empty($offset)){
+			$offset = 0;
+		}
+		$config['base_url'] = base_url()."p_spm/kuesioner";
+		$config['per_page'] = 10;
+		$config['total_rows'] = 't_judul';
+		$config['prev_link'] = "<<";
+		$config['next_link'] = ">>";
+		$config['full_tag_open'] = "<ul>";
+		$config['full_tag_close'] = "</ul>";
+		$config['num_tag_open'] = "<li>";
+		$config['num_tag_close'] = "</li>";
+		$config['cur_tag_open'] = "<li class='active'><a>";
+		$config['cur_tag_close'] = "</a></li>";
+		$config['next_tag_open'] = "<li class='next'>";
+		$config['next_tag_close'] = "</li>";
+		$config['prev_tag_open'] = "<li class='prev'>";
+		$config['prev_tag_close'] = "</li>";
+		$this->pagination->initialize($config);
+		$num = $config['per_page'];
+
+		$data = $this->db->query("SELECT * FROM t_judul WHERE kode = 2");
+		return $data->result_array();
+	}
+
+//proses input kuesioner
+	public function prosesinput_Kuesioner_MK(){
+	$peringatan = "Input Data Kuesioner Berhasil !";
+	$data = array(
+	   'id_judul' => '',
+	   'judul' => $this->input->post('judul'),
+	   'kode' => '2'
+	   );
+
+	$this->db->insert('t_judul', $data); 
+	$this->session->set_userdata("msg", $peringatan);
+	}
+
+	//hapus Judul Kuesioner
+	function hapus_judul_Kuesioner_MK(){
+		$id = $this->uri->segment(3);
+		$this->db->delete('t_judul',array('id_judul' => $id));
+	}
+/* -------------------------------------------- END Kuesioner MK ------------------------------------------------- */
 }
 
  ?>
