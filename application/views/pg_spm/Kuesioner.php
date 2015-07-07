@@ -98,6 +98,9 @@
 									<a onClick="return confirm('Anda yakin ingin menghapus data ini ?')" class="red" href="<?php echo base_url(); ?>p_spm/Hapus_Judul_Kuesioner/<?php echo $data['id_judul']; ?>">
 										<i class="icon-trash bigger-130"></i>
 									</a>
+									<a class="Blue" href="<?php echo base_url(); ?>p_spm/Tampil_Pertanyaan/<?php echo $data['id_judul']; ?>">
+										<i class="icon-list bigger-130"></i>
+									</a>
 								</div>
 
 								
