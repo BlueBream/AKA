@@ -25,7 +25,7 @@ class m_spm extends CI_Model{
 		$this->pagination->initialize($config);
 		$num = $config['per_page'];
 
-		$data = $this->db->query("SELECT * FROM t_judul WHERE id_judul = id_judul ");
+		$data = $this->db->query("SELECT * FROM t_judul WHERE kode = 1");
 		return $data->result_array();
 	}
 
